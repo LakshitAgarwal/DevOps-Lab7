@@ -1,1 +1,43 @@
 
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                echo 'Cloning repository...'
+                // Jenkins will automatically checkout code if pipeline from SCM is used
+            }
+        }
+        stage('Validate Files') {
+            steps {
+                echo 'Checking for HTML, CSS, JS files...'
+                sh '''
+                    ls *.html || echo "No HTML files found"
+                    ls *.css || echo "No CSS files found"
+                    ls *.js || echo "No JS files found"
+                '''
+            }
+        }
+        stage('Run Linter (optional)') {
+            steps {
+                echo 'Running HTML/CSS/JS linting (placeholder)...'
+                // Install linter or just simulate
+                sh 'echo "No linter configured yet."'
+            }
+        }
+        stage('Build/Zip') {
+            steps {
+                echo 'Zipping project files...'
+                sh 'zip -r project.zip .'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Simulating deployment...'
+                // Could simulate copying to web server or S3
+                sh 'mkdir -p /tmp/html_deploy && cp -r * /tmp/html_deploy/'
+            }
+        }
+    }
+}
